@@ -2,7 +2,7 @@ import { create } from "zustand";
 import type { Step1Type, Step2Type, Step3Type } from "../schemas/stepSchemas";
 import { persist } from "zustand/middleware";
 
-export type FormData = Partial<Step1Type & Step2Type & Step3Type>;
+type FormData = Partial<Step1Type & Step2Type & Step3Type>;
 
 interface FormState {
   step: number;
