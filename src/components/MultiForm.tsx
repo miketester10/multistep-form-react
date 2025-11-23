@@ -37,8 +37,8 @@ export default function MultiForm() {
       next(values);
     } else {
       submit(values);
-      form.reset();
       clear();
+      form.reset({});
       alert(JSON.stringify({ ...data, ...values }, null, 2));
     }
   };

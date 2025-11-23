@@ -10,8 +10,10 @@ export function StepFields<T extends FieldValues>({ form, fields }: StepFieldsPr
     <>
       {fields.map((field, index) => (
         <div key={index} className="flex flex-col">
-          <label className="font-medium capitalize">{field}</label>
-          <input className="border p-2 rounded" {...form.register(field)} />
+          <label htmlFor={field} className="font-medium capitalize">
+            {field}
+          </label>
+          <input id={field} className="border p-2 rounded" {...form.register(field)} />
 
           {form.formState.errors[field] && <p className="text-red-500 text-sm">{String(form.formState.errors[field].message)}</p>}
         </div>
