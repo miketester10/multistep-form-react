@@ -30,7 +30,6 @@ export default function MultiForm() {
         acc[field] = undefined;
         return acc;
       }, {} as FormData);
-      console.log(emptyFormValues)
       form.reset(emptyFormValues);
     }
   };
