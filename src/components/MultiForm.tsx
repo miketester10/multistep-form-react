@@ -22,12 +22,16 @@ export default function MultiForm() {
       next(values);
     } else {
       submit(values);
-      resetFormStore(); // Resetta lo store
-      const emptyFormValues = currentStep.fields.reduce((acc, field) => {
+      // Resetta lo store
+      resetFormStore();
+      // Resetta tutti i campi di tutti gli step del react-hook-form
+      const allFields = steps.flatMap((step) => step.fields);
+      const emptyFormValues = allFields.reduce((acc, field) => {
         acc[field] = undefined;
         return acc;
       }, {} as FormData);
-      form.reset(emptyFormValues); // Resetta il react-hook-form
+      console.log(emptyFormValues)
+      form.reset(emptyFormValues);
     }
   };
 
