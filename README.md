@@ -9,6 +9,7 @@ Un'applicazione React moderna per la gestione di form multi-step con validazione
 - **Progress Bar**: Barra di progresso animata che mostra la percentuale di completamento
 - **Animazioni Fluide**: Transizioni animate tra gli step usando Framer Motion
 - **Persistenza Dati**: I dati vengono salvati automaticamente nel localStorage tramite Zustand persist middleware
+- **Reset Automatico**: Dopo il submit finale, il form viene automaticamente resettato e torna al primo step
 - **Design Moderno**: Interfaccia utente moderna e responsive con Tailwind CSS v4
 - **Type-Safe**: Completamente scritto in TypeScript per maggiore sicurezza del codice
 

@@ -8,7 +8,7 @@ const steps = [
   { schema: stepSchema3, fields: ["carta", "mese", "anno"] },
 ] as const;
 
-type FormData = Partial<Step1Type & Step2Type & Step3Type>;
+export type FormData = Partial<Step1Type & Step2Type & Step3Type>;
 
 interface FormState {
   currentStepNumber: number;

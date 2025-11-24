@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { type StepValues } from "../schemas/stepSchemas";
-import { useFormStore } from "../store/useFormStore";
+import { useFormStore, type FormData } from "../store/useFormStore";
 import { StepFields } from "./StepFields";
 import { ProgressBar } from "./ProgressBar";
 
@@ -22,8 +22,12 @@ export default function MultiForm() {
       next(values);
     } else {
       submit(values);
-      resetFormStore();
-      form.reset({});
+      resetFormStore(); // Resetta lo store
+      const emptyFormValues = currentStep.fields.reduce((acc, field) => {
+        acc[field] = undefined;
+        return acc;
+      }, {} as FormData);
+      form.reset(emptyFormValues); // Resetta il react-hook-form
     }
   };
 
