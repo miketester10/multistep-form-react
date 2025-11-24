@@ -1,32 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { stepSchema1, stepSchema2, stepSchema3, type StepValues } from "../schemas/stepSchemas";
+import { type StepValues } from "../schemas/stepSchemas";
 import { useFormStore } from "../store/useFormStore";
 import { StepFields } from "./StepFields";
 import { ProgressBar } from "./ProgressBar";
 
-const steps = [
-  {
-    schema: stepSchema1,
-    fields: ["nome", "cognome", "email"],
-  },
-  {
-    schema: stepSchema2,
-    fields: ["indirizzo", "citta", "cap"],
-  },
-  {
-    schema: stepSchema3,
-    fields: ["carta", "mese", "anno"],
-  },
-] as const;
-
 export default function MultiForm() {
-  const { currentStepNumber, data, next, back, submit, clear } = useFormStore();
+  const { currentStepNumber, totalStepsNumber, steps, data, next, back, submit, resetFormStore } = useFormStore();
 
   const index = currentStepNumber - 1;
   const currentStep = steps[index];
-  const totalSteps = steps.length;
 
   const form = useForm<StepValues>({
     resolver: zodResolver(currentStep.schema),
@@ -34,13 +18,12 @@ export default function MultiForm() {
   });
 
   const onSubmit = (values: StepValues) => {
-    if (currentStepNumber < totalSteps) {
+    if (currentStepNumber < totalStepsNumber) {
       next(values);
     } else {
       submit(values);
-      clear();
+      resetFormStore();
       form.reset({});
-      alert(JSON.stringify({ ...data, ...values }, null, 2));
     }
   };
 
@@ -53,7 +36,7 @@ export default function MultiForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 bg-white p-6 rounded-2xl shadow-2xl"
       >
-        <ProgressBar currentStep={currentStepNumber} totalSteps={totalSteps} />
+        <ProgressBar currentStep={currentStepNumber} totalSteps={totalStepsNumber} />
 
         <StepFields form={form} fields={currentStep.fields} />
 
@@ -65,7 +48,7 @@ export default function MultiForm() {
           )}
 
           <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-200 cursor-pointer">
-            {currentStepNumber === totalSteps ? "Invia" : "Avanti"}
+            {currentStepNumber === totalStepsNumber ? "Invia" : "Avanti"}
           </button>
         </div>
       </motion.form>

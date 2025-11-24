@@ -8,7 +8,7 @@ Un'applicazione React moderna per la gestione di form multi-step con validazione
 - **Validazione in Tempo Reale**: Validazione dei campi con messaggi di errore chiari
 - **Progress Bar**: Barra di progresso animata che mostra la percentuale di completamento
 - **Animazioni Fluide**: Transizioni animate tra gli step usando Framer Motion
-- **Persistenza Dati**: I dati vengono salvati automaticamente nello stato globale (Zustand)
+- **Persistenza Dati**: I dati vengono salvati automaticamente nel localStorage tramite Zustand persist middleware
 - **Design Moderno**: Interfaccia utente moderna e responsive con Tailwind CSS v4
 - **Type-Safe**: Completamente scritto in TypeScript per maggiore sicurezza del codice
 
@@ -72,15 +72,15 @@ multistep-form/
 │   ├── schemas/
 │   │   └── stepSchemas.ts     # Schemi di validazione Zod
 │   ├── store/
-│   │   └── useFormStore.ts    # Store Zustand per lo stato globale
+│   │   └── useFormStore.ts    # Store Zustand per lo stato globale con persistenza localStorage
 │   ├── App.tsx                # Componente root
-│   ├── main.tsx              # Entry point
-│   └── index.css             # Stili globali con Tailwind
+│   ├── main.tsx               # Entry point
+│   └── index.css              # Stili globali con Tailwind
 ├── public/                    # File statici
-├── index.html                # Template HTML
-├── vite.config.ts            # Configurazione Vite
-├── tailwind.config.js        # Configurazione Tailwind (v4)
-└── package.json              # Dipendenze e script
+├── index.html                 # Template HTML
+├── vite.config.ts             # Configurazione Vite
+├── tailwind.config.js         # Configurazione Tailwind (v4)
+└── package.json               # Dipendenze e script
 ```
 
 ## 📝 Step del Form
@@ -105,16 +105,14 @@ multistep-form/
 
 ### Modificare gli Step
 
-Gli step sono definiti nel file `src/components/MultiForm.tsx`:
+Gli step sono definiti nel file `src/store/useFormStore.ts`:
 
 ```typescript
 const steps = [
-  {
-    schema: stepSchema1,
-    fields: ["nome", "cognome", "email"],
-  },
-  // ... altri step
-];
+  { schema: stepSchema1, fields: ["nome", "cognome", "email"] },
+  { schema: stepSchema2, fields: ["indirizzo", "citta", "cap"] },
+  { schema: stepSchema3, fields: ["carta", "mese", "anno"] },
+] as const;
 ```
 
 ### Modificare gli Schemi di Validazione
